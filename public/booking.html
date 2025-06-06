@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Room - Grand Vista Hotel</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Grand Vista Hotel</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/booking" class="nav-link active">Book Room</a></li>
+                <li><a href="/about" class="nav-link">About Us</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                <li><a href="/admin" class="nav-link admin-link">Staff Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="booking-main">
+        <div class="container">
+            <h1>Book Your Room</h1>
+            
+            <!-- Booking Form -->
+            <div class="booking-section">
+                <div class="booking-dates">
+                    <h3>Select Your Dates</h3>
+                    <div class="date-inputs">
+                        <div class="input-group">
+                            <label for="checkIn">Check-in Date:</label>
+                            <input type="date" id="checkIn" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="checkOut">Check-out Date:</label>
+                            <input type="date" id="checkOut" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Rooms -->
+            <div class="rooms-section">
+                <h3>Available Rooms</h3>
+                <div id="roomsContainer" class="rooms-grid">
+                    <!-- Rooms will be loaded here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Booking Form Modal -->
+            <div id="bookingModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Complete Your Booking</h2>
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="guestName">Full Name:</label>
+                            <input type="text" id="guestName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestEmail">Email:</label>
+                            <input type="email" id="guestEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestPhone">Phone Number:</label>
+                            <input type="tel" id="guestPhone" required>
+                        </div>
+                        <div class="booking-summary">
+                            <h3>Booking Summary</h3>
+                            <div id="bookingSummary"></div>
+                        </div>
+                        <div class="payment-section">
+                            <h3>Payment Information</h3>
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number:</label>
+                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiry Date:</label>
+                                    <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV:</label>
+                                    <input type="text" id="cvv" placeholder="123" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardName">Name on Card:</label>
+                                <input type="text" id="cardName" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Complete Booking</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Success Modal -->
+            <div id="successModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Booking Confirmed!</h2>
+                    <div id="confirmationDetails"></div>
+                    <button onclick="location.href='/'" class="btn btn-primary">Return to Home</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Grand Vista Hotel</h3>
+                    <p>Your comfort is our priority</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/booking">Book Room</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>123 Hotel Street, City Center</p>
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@grandvistahotel.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Grand Vista Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/booking.js"></script>
+</body>
+</html>

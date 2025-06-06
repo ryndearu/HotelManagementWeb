@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "type": "Standard",
+    "price": 100,
+    "description": "Comfortable standard room with modern amenities",
+    "image": "/images/standard-room.jpg",
+    "occupied": false,
+    "needsCleaning": false,
+    "checkedOut": false
+  },
+  {
+    "id": 2,
+    "type": "Standard",
+    "price": 100,
+    "description": "Comfortable standard room with modern amenities",
+    "image": "/images/standard-room.jpg",
+    "occupied": false,
+    "needsCleaning": false,
+    "checkedOut": false
+  },
+  {
+    "id": 3,
+    "type": "Deluxe",
+    "price": 200,
+    "description": "Luxurious deluxe room with premium facilities and city view",
+    "image": "/images/deluxe-room.jpg",
+    "occupied": false,
+    "needsCleaning": false,
+    "checkedOut": false
+  },
+  {
+    "id": 4,
+    "type": "Deluxe",
+    "price": 200,
+    "description": "Luxurious deluxe room with premium facilities and city view",
+    "image": "/images/deluxe-room.jpg",
+    "occupied": false,
+    "needsCleaning": false,
+    "checkedOut": false
+  }
+]

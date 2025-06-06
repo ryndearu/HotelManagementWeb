@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Grand Vista Hotel</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Grand Vista Hotel - Staff Dashboard</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><button id="logoutBtn" class="btn btn-secondary">Logout</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Room Service Management</h1>
+                <p>Manage room status and housekeeping operations</p>
+                <button id="refreshBtn" class="btn btn-secondary">Refresh Status</button>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3 id="occupiedCount">0</h3>
+                    <p>Occupied Rooms</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="availableCount">0</h3>
+                    <p>Available Rooms</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="cleaningCount">0</h3>
+                    <p>Need Cleaning</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="checkedOutCount">0</h3>
+                    <p>Checked Out</p>
+                </div>
+            </div>
+
+            <div class="rooms-management">
+                <h2>Room Status Management</h2>
+                <div id="roomsGrid" class="admin-rooms-grid">
+                    <!-- Rooms will be loaded here -->
+                </div>
+            </div>
+
+            <div class="recent-bookings">
+                <h2>Recent Bookings</h2>
+                <div id="bookingsTable" class="bookings-table">
+                    <!-- Bookings will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

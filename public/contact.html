@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Grand Vista Hotel</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Grand Vista Hotel</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/booking" class="nav-link">Book Room</a></li>
+                <li><a href="/about" class="nav-link">About Us</a></li>
+                <li><a href="/contact" class="nav-link active">Contact</a></li>
+                <li><a href="/admin" class="nav-link admin-link">Staff Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="contact-main">
+        <div class="container">
+            <section class="contact-hero">
+                <h1>Contact Us</h1>
+                <p class="hero-subtitle">We're here to help with any questions or assistance you need</p>
+            </section>
+
+            <section class="contact-content">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Get in Touch</h2>
+                        
+                        <div class="contact-item">
+                            <h3>Address</h3>
+                            <p>Grand Vista Hotel<br>
+                            123 Hotel Street<br>
+                            City Center, Downtown District<br>
+                            Metro City, MC 12345</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Phone</h3>
+                            <p><strong>Main Reception:</strong> (555) 123-4567</p>
+                            <p><strong>Reservations:</strong> (555) 123-4568</p>
+                            <p><strong>Room Service:</strong> (555) 123-4569</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Email</h3>
+                            <p><strong>General Inquiries:</strong> info@grandvistahotel.com</p>
+                            <p><strong>Reservations:</strong> reservations@grandvistahotel.com</p>
+                            <p><strong>Events:</strong> events@grandvistahotel.com</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Operating Hours</h3>
+                            <p><strong>Front Desk:</strong> 24/7</p>
+                            <p><strong>Restaurant:</strong> 6:00 AM - 11:00 PM</p>
+                            <p><strong>Bar:</strong> 5:00 PM - 1:00 AM</p>
+                            <p><strong>Pool:</strong> 6:00 AM - 10:00 PM</p>
+                            <p><strong>Fitness Center:</strong> 24/7</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-section">
+                        <h2>Send us a Message</h2>
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Full Name:</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address:</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number:</label>
+                                <input type="tel" id="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">Subject:</label>
+                                <select id="subject" required>
+                                    <option value="">Please select...</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="reservation">Reservation Question</option>
+                                    <option value="complaint">Complaint</option>
+                                    <option value="compliment">Compliment</option>
+                                    <option value="event">Event Planning</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Message:</label>
+                                <textarea id="message" rows="6" required placeholder="Please describe your inquiry or message..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section class="directions">
+                <h2>Directions & Location</h2>
+                <div class="directions-content">
+                    <div class="map-placeholder">
+                        <span>Interactive Map would be here</span>
+                    </div>
+                    <div class="directions-text">
+                        <h3>Getting Here</h3>
+                        <h4>From the Airport:</h4>
+                        <p>Take Airport Express Line to Downtown Station, then a 5-minute taxi ride to the hotel.</p>
+                        
+                        <h4>By Car:</h4>
+                        <p>We're located on Hotel Street, with valet parking available. GPS coordinates: 40.7128° N, 74.0060° W</p>
+                        
+                        <h4>Public Transportation:</h4>
+                        <p>Metro Station (Blue Line): City Center Station - 2 blocks away<br>
+                        Bus Routes: 15, 23, 45 - Stop: Hotel Street & Main Ave</p>
+                        
+                        <h4>Nearby Landmarks:</h4>
+                        <ul>
+                            <li>City Mall (0.3 miles)</li>
+                            <li>Financial District (0.5 miles)</li>
+                            <li>Convention Center (0.7 miles)</li>
+                            <li>Museum of Arts (1.2 miles)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Grand Vista Hotel</h3>
+                    <p>Your comfort is our priority</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/booking">Book Room</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>123 Hotel Street, City Center</p>
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@grandvistahotel.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Grand Vista Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/contact.js"></script>
+</body>
+</html>
