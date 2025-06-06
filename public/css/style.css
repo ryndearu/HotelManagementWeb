@@ -933,6 +933,108 @@ body {
     font-weight: 600;
 }
 
+/* Expandable Column Styles */
+.expandable-column {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    position: relative;
+    min-width: 120px;
+}
+
+.expandable-column:hover {
+    background-color: #e8f4fd;
+}
+
+.expandable-column::after {
+    content: "📋";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.expandable-column.expanded::after {
+    content: "📋✨";
+}
+
+.booking-id-short,
+.booking-id-full {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    background: #f1f3f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.booking-id-full {
+    background: #e3f2fd;
+    border: 1px solid #2196F3;
+    color: #1976D2;
+    font-weight: 500;
+}
+
+.expandable-column[title]:hover::before {
+    content: "Click to expand";
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+/* Checkout Status Styles */
+.checkout-status {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.checkout-emoji {
+    font-size: 1.2em;
+    cursor: help;
+    transition: transform 0.2s ease;
+}
+
+.checkout-emoji:hover {
+    transform: scale(1.2);
+}
+
+/* Enhanced Table Styling */
+.bookings-table table {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.bookings-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.bookings-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.bookings-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+/* Status indicators in bookings */
+.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-container {

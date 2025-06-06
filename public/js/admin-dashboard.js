@@ -106,8 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }).join('');
     }
-    
-    // Display bookings
+      // Display bookings
     function displayBookings() {
         if (bookings.length === 0) {
             bookingsTable.innerHTML = '<p>No bookings found.</p>';
@@ -119,36 +118,69 @@ document.addEventListener('DOMContentLoaded', function() {
         const recentBookings = sortedBookings.slice(0, 10); // Show last 10 bookings
         
         bookingsTable.innerHTML = `
-            <table>
+            <table class="bookings-table">
                 <thead>
                     <tr>
-                        <th>Booking ID</th>
+                        <th class="expandable-column">Booking ID</th>
                         <th>Guest Name</th>
                         <th>Room</th>
                         <th>Check-in</th>
                         <th>Check-out</th>
                         <th>Total Cost</th>
                         <th>Status</th>
+                        <th>Checked-out</th>
                     </tr>
                 </thead>
                 <tbody>
-                    ${recentBookings.map(booking => `
-                        <tr>
-                            <td>${booking.id.substring(0, 8)}...</td>
-                            <td>${booking.guestName}</td>
-                            <td>Room ${booking.roomId} (${booking.roomType})</td>
-                            <td>${booking.checkIn}</td>
-                            <td>${booking.checkOut}</td>
-                            <td>$${booking.totalCost}</td>
-                            <td><span class="status-${booking.status}">${booking.status}</span></td>
-                        </tr>
-                    `).join('')}
+                    ${recentBookings.map(booking => {
+                        // Find the room to check its checked-out status
+                        const room = rooms.find(r => r.id === booking.roomId);
+                        const isCheckedOut = room ? room.checkedOut : false;
+                        const checkedOutEmoji = isCheckedOut ? '✅' : '❌';
+                        
+                        return `
+                            <tr>
+                                <td class="expandable-column" title="${booking.id}">
+                                    <span class="booking-id-short">${booking.id.substring(0, 8)}...</span>
+                                    <span class="booking-id-full" style="display: none;">${booking.id}</span>
+                                </td>
+                                <td>${booking.guestName}</td>
+                                <td>Room ${booking.roomId} (${booking.roomType})</td>
+                                <td>${booking.checkIn}</td>
+                                <td>${booking.checkOut}</td>
+                                <td>$${booking.totalCost}</td>
+                                <td><span class="status-${booking.status}">${booking.status}</span></td>
+                                <td class="checkout-status" data-room-id="${booking.roomId}">
+                                    <span class="checkout-emoji" title="${isCheckedOut ? 'Room is checked out' : 'Room is not checked out'}">${checkedOutEmoji}</span>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('')}
                 </tbody>
             </table>
         `;
+        
+        // Add click event listeners for expandable columns
+        document.querySelectorAll('.expandable-column').forEach(cell => {
+            cell.addEventListener('click', function() {
+                const shortSpan = this.querySelector('.booking-id-short');
+                const fullSpan = this.querySelector('.booking-id-full');
+                
+                if (shortSpan && fullSpan) {
+                    if (shortSpan.style.display === 'none') {
+                        shortSpan.style.display = 'inline';
+                        fullSpan.style.display = 'none';
+                        this.classList.remove('expanded');
+                    } else {
+                        shortSpan.style.display = 'none';
+                        fullSpan.style.display = 'inline';
+                        this.classList.add('expanded');
+                    }
+                }
+            });
+        });
     }
-    
-    // Update room status
+      // Update room status
     window.updateRoomStatus = async function(roomId, statusType, value) {
         try {
             const room = rooms.find(r => r.id === roomId);
@@ -169,6 +201,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 rooms[roomIndex] = updatedRoom;
                 displayRooms();
                 updateStats();
+                
+                // Update the checked-out status in the bookings table without full refresh
+                if (statusType === 'checkedOut') {
+                    updateCheckoutStatusInTable(roomId, value);
+                }
             } else {
                 alert('Failed to update room status');
             }
@@ -177,6 +214,17 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Failed to update room status');
         }
     };
+    
+    // Update checkout status in bookings table without full refresh
+    function updateCheckoutStatusInTable(roomId, isCheckedOut) {
+        const checkoutCells = document.querySelectorAll(`[data-room-id="${roomId}"] .checkout-emoji`);
+        checkoutCells.forEach(cell => {
+            const emoji = isCheckedOut ? '✅' : '❌';
+            const title = isCheckedOut ? 'Room is checked out' : 'Room is not checked out';
+            cell.textContent = emoji;
+            cell.title = title;
+        });
+    }
     
     // Reset room to available state
     window.resetRoom = async function(roomId) {

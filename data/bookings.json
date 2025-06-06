@@ -12,5 +12,19 @@
     "guestPhone": "555-123-4567",
     "bookingDate": "2025-06-05T16:24:55.358Z",
     "status": "confirmed"
+  },
+  {
+    "id": "84167f66-1714-4080-ab78-2c526f0cda2a",
+    "roomId": 3,
+    "roomType": "Deluxe",
+    "checkIn": "2025-06-08",
+    "checkOut": "2025-06-10",
+    "nights": 2,
+    "totalCost": 400,
+    "guestName": "Jane Smith",
+    "guestEmail": "jane@example.com",
+    "guestPhone": "555-987-6543",
+    "bookingDate": "2025-06-06T00:29:15.791Z",
+    "status": "confirmed"
   }
 ]

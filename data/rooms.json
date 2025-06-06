@@ -25,9 +25,9 @@
     "price": 200,
     "description": "Luxurious deluxe room with premium facilities and city view",
     "image": "/images/deluxe-room.jpg",
-    "occupied": false,
+    "occupied": true,
     "needsCleaning": false,
-    "checkedOut": false
+    "checkedOut": true
   },
   {
     "id": 4,
