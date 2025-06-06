@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Flow - Grand Vista Hotel</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Login Flow Test</h1>
+        
+        <div class="test-section">
+            <h2>Step 1: Login Test</h2>
+            <button id="testLogin" class="btn btn-primary">Test Login API</button>
+            <div id="loginResult" class="result-box"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Step 2: Session Test</h2>
+            <button id="testDashboard" class="btn btn-primary">Test Dashboard Access</button>
+            <div id="dashboardResult" class="result-box"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Step 3: Manual Login Form</h2>
+            <form id="manualLoginForm">
+                <input type="text" id="testUsername" placeholder="Username" value="admin">
+                <input type="password" id="testPassword" placeholder="Password" value="hotel123">
+                <button type="submit" class="btn btn-primary">Manual Login Test</button>
+            </form>
+            <div id="manualResult" class="result-box"></div>
+        </div>
+        
+        <div class="test-section">
+            <a href="/admin-login.html" class="btn btn-secondary">Back to Admin Login</a>
+            <a href="/admin/dashboard" class="btn btn-secondary">Go to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // Test 1: Direct API call
+        document.getElementById('testLogin').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = 'Testing login API...';
+            
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: 'admin', password: 'hotel123' })
+                });
+                
+                const result = await response.json();
+                resultDiv.innerHTML = `
+                    <strong>Response Status:</strong> ${response.status}<br>
+                    <strong>Result:</strong> ${JSON.stringify(result)}<br>
+                    <strong>Headers:</strong> ${JSON.stringify([...response.headers.entries()])}
+                `;
+                
+                if (result.success) {
+                    resultDiv.innerHTML += '<br><span style="color: green;">✓ Login API works!</span>';
+                } else {
+                    resultDiv.innerHTML += '<br><span style="color: red;">✗ Login failed</span>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: red;">Error: ${error.message}</span>`;
+            }
+        });
+        
+        // Test 2: Dashboard access
+        document.getElementById('testDashboard').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('dashboardResult');
+            resultDiv.innerHTML = 'Testing dashboard access...';
+            
+            try {
+                const response = await fetch('/admin/dashboard');
+                const isRedirect = response.redirected;
+                const finalUrl = response.url;
+                
+                resultDiv.innerHTML = `
+                    <strong>Response Status:</strong> ${response.status}<br>
+                    <strong>Final URL:</strong> ${finalUrl}<br>
+                    <strong>Was Redirected:</strong> ${isRedirect}<br>
+                `;
+                
+                if (response.ok && !isRedirect) {
+                    resultDiv.innerHTML += '<br><span style="color: green;">✓ Dashboard accessible!</span>';
+                } else if (isRedirect) {
+                    resultDiv.innerHTML += '<br><span style="color: orange;">⚠ Redirected (not logged in)</span>';
+                } else {
+                    resultDiv.innerHTML += '<br><span style="color: red;">✗ Dashboard access failed</span>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: red;">Error: ${error.message}</span>`;
+            }
+        });
+        
+        // Test 3: Manual form submission
+        document.getElementById('manualLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('manualResult');
+            resultDiv.innerHTML = 'Testing manual login form...';
+            
+            const username = document.getElementById('testUsername').value;
+            const password = document.getElementById('testPassword').value;
+            
+            try {
+                // Step 1: Login
+                const loginResponse = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const loginResult = await loginResponse.json();
+                
+                if (loginResult.success) {
+                    resultDiv.innerHTML = '<span style="color: green;">✓ Login successful!</span><br>';
+                    
+                    // Step 2: Try to access dashboard
+                    setTimeout(async () => {
+                        try {
+                            const dashResponse = await fetch('/admin/dashboard');
+                            if (dashResponse.ok && !dashResponse.redirected) {
+                                resultDiv.innerHTML += '<span style="color: green;">✓ Dashboard accessible! Redirecting...</span>';
+                                setTimeout(() => {
+                                    window.location.href = '/admin/dashboard';
+                                }, 1000);
+                            } else {
+                                resultDiv.innerHTML += '<span style="color: red;">✗ Dashboard still not accessible</span>';
+                            }
+                        } catch (error) {
+                            resultDiv.innerHTML += `<span style="color: red;">Dashboard test error: ${error.message}</span>`;
+                        }
+                    }, 500);
+                } else {
+                    resultDiv.innerHTML = `<span style="color: red;">✗ Login failed: ${loginResult.message}</span>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span style="color: red;">Error: ${error.message}</span>`;
+            }
+        });
+    </script>
+    
+    <style>
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .result-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 3px;
+            min-height: 50px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 8px;
+        }
+    </style>
+</body>
+</html>

@@ -49,6 +49,161 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update statistics
     function updateStats() {
+        const occupiedCount = rooms.filter(room => room.occupied).length;
+        const availableCount = rooms.filter(room => !room.occupied && !room.needsCleaning && !room.checkedOut).length;
+        const cleaningCount = rooms.filter(room => room.needsCleaning).length;
+        const checkedOutCount = rooms.filter(room => room.checkedOut).length;
+        
+        document.getElementById('occupiedCount').textContent = occupiedCount;
+        document.getElementById('availableCount').textContent = availableCount;
+        document.getElementById('cleaningCount').textContent = cleaningCount;
+        document.getElementById('checkedOutCount').textContent = checkedOutCount;
+    }
+    
+    // Display rooms
+    function displayRooms() {
+        roomsGrid.innerHTML = rooms.map(room => {
+            let statusClass = 'available';
+            let statusText = 'Available';
+            
+            if (room.occupied) {
+                statusClass = 'occupied';
+                statusText = 'Occupied';
+            } else if (room.needsCleaning) {
+                statusClass = 'cleaning';
+                statusText = 'Needs Cleaning';
+            } else if (room.checkedOut) {
+                statusClass = 'checked-out';
+                statusText = 'Checked Out';
+            }
+            
+            return `
+                <div class="admin-room-card ${statusClass}">
+                    <div class="room-header">
+                        <div class="room-number">Room ${room.id}</div>
+                        <div class="room-status status-${statusClass.replace('-', '')}">${statusText}</div>
+                    </div>
+                    <div class="room-type">${room.type} - $${room.price}/night</div>
+                    <div class="room-controls">
+                        <button class="control-btn ${room.occupied ? 'active' : ''}" 
+                                onclick="updateRoomStatus(${room.id}, 'occupied', ${!room.occupied})">
+                            ${room.occupied ? 'Set Available' : 'Set Occupied'}
+                        </button>
+                        <button class="control-btn ${room.needsCleaning ? 'active' : ''}" 
+                                onclick="updateRoomStatus(${room.id}, 'needsCleaning', ${!room.needsCleaning})">
+                            ${room.needsCleaning ? 'Cleaned' : 'Needs Cleaning'}
+                        </button>
+                        <button class="control-btn ${room.checkedOut ? 'active' : ''}" 
+                                onclick="updateRoomStatus(${room.id}, 'checkedOut', ${!room.checkedOut})">
+                            ${room.checkedOut ? 'Check In' : 'Check Out'}
+                        </button>
+                        <button class="control-btn" 
+                                onclick="resetRoomStatus(${room.id})">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // Update room status
+    window.updateRoomStatus = async function(roomId, statusType, value) {
+        try {
+            const updateData = {
+                occupied: false,
+                needsCleaning: false,
+                checkedOut: false
+            };
+            updateData[statusType] = value;
+            
+            const response = await fetch(`/api/admin/rooms/${roomId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            });
+            
+            if (response.ok) {
+                loadDashboardData();
+            } else {
+                alert('Failed to update room status');
+            }
+        } catch (error) {
+            console.error('Error updating room status:', error);
+            alert('Failed to update room status');
+        }
+    };
+    
+    // Reset room status
+    window.resetRoomStatus = async function(roomId) {
+        try {
+            const response = await fetch(`/api/admin/rooms/${roomId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    occupied: false,
+                    needsCleaning: false,
+                    checkedOut: false
+                })
+            });
+            
+            if (response.ok) {
+                loadDashboardData();
+            } else {
+                alert('Failed to reset room status');
+            }
+        } catch (error) {
+            console.error('Error resetting room status:', error);
+            alert('Failed to reset room status');
+        }
+    };
+    
+    // Display bookings
+    function displayBookings() {
+        if (bookings.length === 0) {
+            bookingsTable.innerHTML = '<p>No bookings found.</p>';
+            return;
+        }
+        
+        const sortedBookings = bookings.sort((a, b) => new Date(b.bookingDate) - new Date(a.bookingDate));
+        
+        bookingsTable.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Guest Name</th>
+                        <th>Room Type</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${sortedBookings.slice(0, 10).map(booking => `
+                        <tr>
+                            <td>${booking.id.substring(0, 8)}...</td>
+                            <td>${booking.guestName}</td>
+                            <td>${booking.roomType}</td>
+                            <td>${booking.checkIn}</td>
+                            <td>${booking.checkOut}</td>
+                            <td>$${booking.totalCost}</td>
+                            <td>${booking.status}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+    
+    // Initial load
+    loadDashboardData();
+});
         const occupied = rooms.filter(room => room.occupied).length;
         const available = rooms.filter(room => !room.occupied && !room.needsCleaning && !room.checkedOut).length;
         const cleaning = rooms.filter(room => room.needsCleaning).length;

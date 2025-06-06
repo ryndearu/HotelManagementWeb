@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "2d1daf29-7f49-486c-876d-94811a0b0d62",
+    "roomId": 1,
+    "roomType": "Standard",
+    "checkIn": "2025-06-10",
+    "checkOut": "2025-06-12",
+    "nights": 2,
+    "totalCost": 200,
+    "guestName": "John Doe",
+    "guestEmail": "john@example.com",
+    "guestPhone": "555-123-4567",
+    "bookingDate": "2025-06-05T16:24:55.358Z",
+    "status": "confirmed"
+  }
+]
