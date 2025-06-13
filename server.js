@@ -34,13 +34,12 @@ if (!fs.existsSync(BOOKINGS_FILE)) {
   fs.writeFileSync(BOOKINGS_FILE, JSON.stringify([]));
 }
 
-if (!fs.existsSync(ROOMS_FILE)) {
-  const initialRooms = [
+if (!fs.existsSync(ROOMS_FILE)) {  const initialRooms = [
     {
       id: 1,
       type: 'Standard',
       price: 100,
-      description: 'Comfortable standard room with modern amenities',
+      description: 'Kamar standard yang nyaman dengan fasilitas modern',
       image: '/images/standard-room.jpg',
       occupied: false,
       needsCleaning: false,
@@ -50,7 +49,7 @@ if (!fs.existsSync(ROOMS_FILE)) {
       id: 2,
       type: 'Standard',
       price: 100,
-      description: 'Comfortable standard room with modern amenities',
+      description: 'Kamar standard yang nyaman dengan fasilitas modern',
       image: '/images/standard-room.jpg',
       occupied: false,
       needsCleaning: false,
@@ -60,7 +59,7 @@ if (!fs.existsSync(ROOMS_FILE)) {
       id: 3,
       type: 'Deluxe',
       price: 200,
-      description: 'Luxurious deluxe room with premium facilities and city view',
+      description: 'Kamar deluxe mewah dengan fasilitas premium dan pemandangan kota',
       image: '/images/deluxe-room.jpg',
       occupied: false,
       needsCleaning: false,
@@ -70,7 +69,7 @@ if (!fs.existsSync(ROOMS_FILE)) {
       id: 4,
       type: 'Deluxe',
       price: 200,
-      description: 'Luxurious deluxe room with premium facilities and city view',
+      description: 'Kamar deluxe mewah dengan fasilitas premium dan pemandangan kota',
       image: '/images/deluxe-room.jpg',
       occupied: false,
       needsCleaning: false,
@@ -140,7 +139,7 @@ app.post('/api/admin/login', (req, res) => {
     req.session.isAdmin = true;
     res.json({ success: true });
   } else {
-    res.json({ success: false, message: 'Invalid credentials' });
+    res.json({ success: false, message: 'Kredensial tidak valid' });
   }
 });
 
@@ -151,7 +150,7 @@ app.post('/api/admin/logout', (req, res) => {
 
 app.get('/api/admin/rooms', (req, res) => {
   if (!req.session.isAdmin) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Tidak diizinkan' });
   }
   
   const rooms = readJSON(ROOMS_FILE);
@@ -160,7 +159,7 @@ app.get('/api/admin/rooms', (req, res) => {
 
 app.put('/api/admin/rooms/:id', (req, res) => {
   if (!req.session.isAdmin) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Tidak diizinkan' });
   }
   
   const roomId = parseInt(req.params.id);
@@ -174,7 +173,7 @@ app.put('/api/admin/rooms/:id', (req, res) => {
     writeJSON(ROOMS_FILE, rooms);
     res.json({ success: true });
   } else {
-    res.status(404).json({ error: 'Room not found' });
+    res.status(404).json({ error: 'Kamar tidak ditemukan' });
   }
 });
 
@@ -186,7 +185,7 @@ app.post('/api/booking', (req, res) => {
   
   const room = rooms.find(r => r.id === parseInt(roomId));
   if (!room) {
-    return res.status(400).json({ error: 'Room not found' });
+    return res.status(400).json({ error: 'Kamar tidak ditemukan' });
   }
   
   // Calculate total cost
@@ -225,7 +224,7 @@ app.post('/api/booking', (req, res) => {
 
 app.get('/api/bookings', (req, res) => {
   if (!req.session.isAdmin) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Tidak diizinkan' });
   }
   
   const bookings = readJSON(BOOKINGS_FILE);
@@ -233,5 +232,5 @@ app.get('/api/bookings', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Hotel booking server running on http://localhost:${PORT}`);
+  console.log(`Server booking hotel berjalan di http://localhost:${PORT}`);
 });

@@ -41,32 +41,31 @@ document.addEventListener('DOMContentLoaded', function() {
             roomsContainer.innerHTML = '<p class="error">Failed to load rooms. Please try again.</p>';
         }
     }
-    
-    // Display rooms
+      // Display rooms
     function displayRooms() {
         if (!checkInInput.value || !checkOutInput.value) {
-            roomsContainer.innerHTML = '<p>Please select check-in and check-out dates to view available rooms.</p>';
+            roomsContainer.innerHTML = '<p>Silakan pilih tanggal check-in dan check-out untuk melihat kamar yang tersedia.</p>';
             return;
         }
         
         const availableRooms = rooms.filter(room => !room.occupied);
         
         if (availableRooms.length === 0) {
-            roomsContainer.innerHTML = '<p>No rooms available for the selected dates.</p>';
+            roomsContainer.innerHTML = '<p>Tidak ada kamar tersedia untuk tanggal yang dipilih.</p>';
             return;
         }
         
         roomsContainer.innerHTML = availableRooms.map(room => `
             <div class="room-card">
                 <div class="room-image">
-                    <span>${room.type} Room</span>
+                    <span>Kamar ${room.type}</span>
                 </div>
                 <div class="room-details">
-                    <div class="room-type">${room.type} Room</div>
-                    <div class="room-price">$${room.price}/night</div>
+                    <div class="room-type">Kamar ${room.type}</div>
+                    <div class="room-price">$${room.price}/malam</div>
                     <div class="room-description">${room.description}</div>
                     <button class="btn btn-primary" onclick="selectRoom(${room.id})">
-                        Book This Room
+                        Pesan Kamar Ini
                     </button>
                 </div>
             </div>
@@ -86,15 +85,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkInDate = new Date(checkInInput.value);
         const checkOutDate = new Date(checkOutInput.value);
         const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-        const totalCost = nights * selectedRoom.price;
-        
+        const totalCost = nights * selectedRoom.price;        
         document.getElementById('bookingSummary').innerHTML = `
-            <p><strong>Room:</strong> ${selectedRoom.type}</p>
+            <p><strong>Kamar:</strong> ${selectedRoom.type}</p>
             <p><strong>Check-in:</strong> ${checkInInput.value}</p>
             <p><strong>Check-out:</strong> ${checkOutInput.value}</p>
-            <p><strong>Nights:</strong> ${nights}</p>
-            <p><strong>Rate:</strong> $${selectedRoom.price}/night</p>
-            <p><strong>Total Cost:</strong> $${totalCost}</p>
+            <p><strong>Malam:</strong> ${nights}</p>
+            <p><strong>Tarif:</strong> $${selectedRoom.price}/malam</p>
+            <p><strong>Total Biaya:</strong> $${totalCost}</p>
         `;
         
         bookingModal.style.display = 'block';
@@ -123,31 +121,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             const result = await response.json();
-            
-            if (result.success) {
+              if (result.success) {
                 bookingModal.style.display = 'none';
                 showSuccessModal(result.booking);
             } else {
-                alert('Booking failed: ' + result.error);
+                alert('Booking gagal: ' + result.error);
             }
         } catch (error) {
             console.error('Error making booking:', error);
-            alert('Booking failed. Please try again.');
+            alert('Booking gagal. Silakan coba lagi.');
         }
     });
-    
-    // Show success modal
+      // Show success modal
     function showSuccessModal(booking) {
         document.getElementById('confirmationDetails').innerHTML = `
             <div class="confirmation-details">
-                <p><strong>Booking ID:</strong> ${booking.id}</p>
-                <p><strong>Guest Name:</strong> ${booking.guestName}</p>
-                <p><strong>Room Type:</strong> ${booking.roomType}</p>
+                <p><strong>ID Booking:</strong> ${booking.id}</p>
+                <p><strong>Nama Tamu:</strong> ${booking.guestName}</p>
+                <p><strong>Tipe Kamar:</strong> ${booking.roomType}</p>
                 <p><strong>Check-in:</strong> ${booking.checkIn}</p>
                 <p><strong>Check-out:</strong> ${booking.checkOut}</p>
-                <p><strong>Total Nights:</strong> ${booking.nights}</p>
-                <p><strong>Total Cost:</strong> $${booking.totalCost}</p>
-                <p class="success-message">Your booking has been confirmed! Please save your booking ID for reference.</p>
+                <p><strong>Total Malam:</strong> ${booking.nights}</p>
+                <p><strong>Total Biaya:</strong> $${booking.totalCost}</p>
+                <p class="success-message">Booking Anda telah dikonfirmasi! Silakan simpan ID booking Anda untuk referensi.</p>
             </div>
         `;
         successModal.style.display = 'block';

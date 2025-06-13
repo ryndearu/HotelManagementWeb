@@ -59,57 +59,54 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('cleaningCount').textContent = cleaningCount;
         document.getElementById('checkedOutCount').textContent = checkedOutCount;
     }
-    
-    // Display rooms
+      // Display rooms
     function displayRooms() {
         roomsGrid.innerHTML = rooms.map(room => {
             let statusClass = 'available';
-            let statusText = 'Available';
+            let statusText = 'Tersedia';
             
             if (room.occupied) {
                 statusClass = 'occupied';
-                statusText = 'Occupied';
+                statusText = 'Terisi';
             } else if (room.needsCleaning) {
                 statusClass = 'cleaning';
-                statusText = 'Needs Cleaning';
+                statusText = 'Perlu Cleaning';
             } else if (room.checkedOut) {
                 statusClass = 'checked-out';
-                statusText = 'Checked Out';
+                statusText = 'Sudah Checkout';
             }
             
             return `
-                <div class="admin-room-card ${statusClass}">
-                    <div class="room-header">
-                        <div class="room-number">Room ${room.id}</div>
+                <div class="admin-room-card ${statusClass}">                    <div class="room-header">
+                        <div class="room-number">Kamar ${room.id}</div>
                         <div class="room-status status-${statusClass.replace('-', '')}">${statusText}</div>
                     </div>
-                    <div class="room-type">${room.type} - $${room.price}/night</div>
+                    <div class="room-type">${room.type} - $${room.price}/malam</div>
                     <div class="room-controls">
                         <button class="control-btn ${room.occupied ? 'active' : ''}" 
                                 onclick="updateRoomStatus(${room.id}, 'occupied', ${!room.occupied})">
-                            ${room.occupied ? 'Mark Available' : 'Mark Occupied'}
+                            ${room.occupied ? 'Tandai Tersedia' : 'Tandai Terisi'}
                         </button>
                         <button class="control-btn ${room.needsCleaning ? 'active' : ''}" 
                                 onclick="updateRoomStatus(${room.id}, 'needsCleaning', ${!room.needsCleaning})">
-                            ${room.needsCleaning ? 'Cleaned' : 'Needs Cleaning'}
+                            ${room.needsCleaning ? 'Sudah Dibersihkan' : 'Perlu Cleaning'}
                         </button>
                         <button class="control-btn ${room.checkedOut ? 'active' : ''}" 
                                 onclick="updateRoomStatus(${room.id}, 'checkedOut', ${!room.checkedOut})">
-                            ${room.checkedOut ? 'Clear Checkout' : 'Mark Checked Out'}
+                            ${room.checkedOut ? 'Clear Checkout' : 'Tandai Checkout'}
                         </button>
                         <button class="control-btn" 
                                 onclick="resetRoom(${room.id})">
-                            Reset Room
+                            Reset Kamar
                         </button>
                     </div>
                 </div>
             `;
         }).join('');
-    }
-      // Display bookings
+    }      // Display bookings
     function displayBookings() {
         if (bookings.length === 0) {
-            bookingsTable.innerHTML = '<p>No bookings found.</p>';
+            bookingsTable.innerHTML = '<p>Tidak ada booking ditemukan.</p>';
             return;
         }
         
@@ -121,14 +118,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <table class="bookings-table">
                 <thead>
                     <tr>
-                        <th class="expandable-column">Booking ID</th>
-                        <th>Guest Name</th>
-                        <th>Room</th>
+                        <th class="expandable-column">ID Booking</th>
+                        <th>Nama Tamu</th>
+                        <th>Kamar</th>
                         <th>Check-in</th>
                         <th>Check-out</th>
-                        <th>Total Cost</th>
+                        <th>Total Biaya</th>
                         <th>Status</th>
-                        <th>Checked-out</th>
+                        <th>Checkout</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -145,13 +142,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <span class="booking-id-full" style="display: none;">${booking.id}</span>
                                 </td>
                                 <td>${booking.guestName}</td>
-                                <td>Room ${booking.roomId} (${booking.roomType})</td>
+                                <td>Kamar ${booking.roomId} (${booking.roomType})</td>
                                 <td>${booking.checkIn}</td>
                                 <td>${booking.checkOut}</td>
                                 <td>$${booking.totalCost}</td>
                                 <td><span class="status-${booking.status}">${booking.status}</span></td>
                                 <td class="checkout-status" data-room-id="${booking.roomId}">
-                                    <span class="checkout-emoji" title="${isCheckedOut ? 'Room is checked out' : 'Room is not checked out'}">${checkedOutEmoji}</span>
+                                    <span class="checkout-emoji" title="${isCheckedOut ? 'Kamar sudah checkout' : 'Kamar belum checkout'}">${checkedOutEmoji}</span>
                                 </td>
                             </tr>
                         `;

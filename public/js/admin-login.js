@@ -32,16 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (result.success) {
                 console.log('Login successful, redirecting...');
-                window.location.href = '/admin/dashboard';
-            } else {
+                window.location.href = '/admin/dashboard';            } else {
                 console.log('Login failed:', result.message);
                 loginError.style.display = 'block';
-                loginError.textContent = result.message || 'Invalid credentials';
+                loginError.textContent = result.message || 'Kredensial tidak valid';
             }
         } catch (error) {
             console.error('Login error:', error);
             loginError.style.display = 'block';
-            loginError.textContent = 'Login failed. Please try again.';
+            loginError.textContent = 'Login gagal. Silakan coba lagi.';
         }
     });
     

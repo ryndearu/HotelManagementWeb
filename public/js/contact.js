@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
             subject: document.getElementById('subject').value,
             message: document.getElementById('message').value
         };
-        
-        // Simulate sending message (in a real app, this would send to server)
-        alert(`Thank you for your message, ${formData.name}! We will get back to you within 24 hours.`);
+          // Simulate sending message (in a real app, this would send to server)
+        alert(`Terima kasih atas pesan Anda, ${formData.name}! Kami akan menghubungi Anda dalam 24 jam.`);
         
         // Reset form
         contactForm.reset();
