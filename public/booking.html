@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Kamar Anda - Hotel Grand Vista</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Hotel Grand Vista</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Beranda</a></li>
+                <li><a href="/booking" class="nav-link active">Pesan Kamar</a></li>
+                <li><a href="/contact" class="nav-link">Kontak</a></li>
+                <li><a href="/admin" class="nav-link admin-link">Staff Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="booking-main">
+        <div class="container">
+            <h1>Pesan Kamar Anda</h1>
+            
+            <!-- Booking Form -->
+            <div class="booking-section">
+                <div class="booking-dates">
+                    <h3>Pilih Tanggal Anda</h3>
+                    <div class="date-inputs">
+                        <div class="input-group">
+                            <label for="checkIn">Tanggal Check-in:</label>
+                            <input type="date" id="checkIn" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="checkOut">Tanggal Check-out:</label>
+                            <input type="date" id="checkOut" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Rooms -->
+            <div class="rooms-section">
+                <h3>Kamar Tersedia</h3>
+                <div id="roomsContainer" class="rooms-grid">
+                    <!-- Rooms will be loaded here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Booking Form Modal -->
+            <div id="bookingModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Lengkapi Booking Anda</h2>
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="guestName">Nama Lengkap:</label>
+                            <input type="text" id="guestName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestEmail">Email:</label>
+                            <input type="email" id="guestEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestPhone">Nomor Telepon:</label>
+                            <input type="tel" id="guestPhone" required>
+                        </div>
+                        <div class="booking-summary">
+                            <h3>Ringkasan Booking</h3>
+                            <div id="bookingSummary"></div>
+                        </div>
+                        <div class="payment-section">
+                            <h3>Informasi Pembayaran</h3>
+                            <div class="form-group">
+                                <label for="cardNumber">Nomor Kartu:</label>
+                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryDate">Tanggal Kadaluarsa:</label>
+                                    <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV:</label>
+                                    <input type="text" id="cvv" placeholder="123" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cardName">Nama di Kartu:</label>
+                                <input type="text" id="cardName" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Selesaikan Booking</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Success Modal -->
+            <div id="successModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Booking Dikonfirmasi!</h2>
+                    <div id="confirmationDetails"></div>
+                    <button onclick="location.href='/'" class="btn btn-primary">Kembali ke Beranda</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hotel Grand Vista</h3>
+                    <p>Kenyamanan Anda adalah prioritas kami</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Link Cepat</h4>
+                    <ul>
+                        <li><a href="/booking">Pesan Kamar</a></li>
+                        <li><a href="/contact">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Info Kontak</h4>
+                    <p>Jl. Hotel No. 123, Pusat Kota</p>
+                    <p>Telepon: (021) 123-4567</p>
+                    <p>Email: info@hotelgrandvista.co.id</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hotel Grand Vista. Hak cipta dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/booking.js"></script>
+</body>
+</html>

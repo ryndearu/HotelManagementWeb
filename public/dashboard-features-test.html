@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Features Test - Grand Vista Hotel</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Staff Dashboard Updates Completed!</h1>
+        
+        <div class="test-section">
+            <h2>✅ New Features Added:</h2>
+            
+            <div class="feature-highlight">
+                <h3>1. 📋 Expandable Booking IDs</h3>
+                <ul>
+                    <li><strong>Click on Booking ID column</strong> to expand/collapse full ID</li>
+                    <li><strong>Visual indicator:</strong> 📋 icon shows clickable state</li>
+                    <li><strong>Hover tooltip:</strong> Shows "Click to expand" instruction</li>
+                    <li><strong>Styling:</strong> Expanded IDs have blue background with border</li>
+                </ul>
+            </div>
+            
+            <div class="feature-highlight">
+                <h3>2. ✅❌ Checked-out Status Column</h3>
+                <ul>
+                    <li><strong>Real-time updates:</strong> Status changes immediately when staff clicks "Mark Checked Out"</li>
+                    <li><strong>Visual indicators:</strong> ✅ (checked out) or ❌ (not checked out)</li>
+                    <li><strong>No page refresh:</strong> Updates dynamically without reloading the table</li>
+                    <li><strong>Tooltip support:</strong> Hover to see status description</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🧪 Test Data Created:</h2>
+            <div class="test-data">
+                <p><strong>Test Booking 1:</strong> John Doe - Room 1 (Standard) - $200 total</p>
+                <p><strong>Test Booking 2:</strong> Jane Smith - Room 3 (Deluxe) - $400 total</p>
+                <p><strong>Room 3 Status:</strong> Set to "Checked Out" for testing</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎯 How to Test:</h2>
+            <ol>
+                <li><strong>Login to Admin Dashboard:</strong>
+                    <a href="/admin" class="btn btn-primary">Go to Admin Login</a>
+                    (admin/hotel123)
+                </li>
+                <li><strong>Test Expandable IDs:</strong> Click on any Booking ID in the table</li>
+                <li><strong>Test Checkout Status:</strong> Click "Mark Checked Out" button on any room</li>
+                <li><strong>Verify Updates:</strong> Watch the ✅/❌ icons update in real-time</li>
+            </ol>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔧 Technical Implementation:</h2>
+            <div class="tech-details">
+                <h4>JavaScript Updates:</h4>
+                <ul>
+                    <li>Enhanced <code>displayBookings()</code> function with new column</li>
+                    <li>Added <code>updateCheckoutStatusInTable()</code> for real-time updates</li>
+                    <li>Implemented click handlers for expandable columns</li>
+                    <li>Room status tracking linked to booking display</li>
+                </ul>
+                
+                <h4>CSS Enhancements:</h4>
+                <ul>
+                    <li>Expandable column styling with hover effects</li>
+                    <li>Emoji checkout status indicators</li>
+                    <li>Enhanced table design with shadows and transitions</li>
+                    <li>Responsive tooltip system</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <a href="/" class="btn btn-secondary">← Back to Home</a>
+            <a href="/admin/dashboard" class="btn btn-primary">Test Dashboard Features →</a>
+        </div>
+    </div>
+
+    <style>
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .feature-highlight {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+        
+        .feature-highlight h3 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        
+        .test-data {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .tech-details {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .tech-details code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+    </style>
+</body>
+</html>

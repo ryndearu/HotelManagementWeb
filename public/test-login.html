@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin Login</title>
+</head>
+<body>
+    <h1>Test Admin Login</h1>
+    
+    <button onclick="testLogin()">Test Login</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testLogin() {
+            console.log('Testing login...');
+            
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: 'admin', password: 'hotel123' })
+                });
+                
+                console.log('Response:', response);
+                const result = await response.json();
+                console.log('Result:', result);
+                
+                document.getElementById('result').innerHTML = `
+                    <p>Response Status: ${response.status}</p>
+                    <p>Success: ${result.success}</p>
+                    <p>Message: ${result.message || 'None'}</p>
+                `;
+                
+                if (result.success) {
+                    // Test accessing dashboard
+                    setTimeout(async () => {
+                        const dashResponse = await fetch('/admin/dashboard');
+                        console.log('Dashboard response:', dashResponse.status);
+                        if (dashResponse.status === 200) {
+                            window.location.href = '/admin/dashboard';
+                        }
+                    }, 1000);
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak Kami - Hotel Grand Vista</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Hotel Grand Vista</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Beranda</a></li>
+                <li><a href="/booking" class="nav-link">Pesan Kamar</a></li>
+                <li><a href="/contact" class="nav-link active">Kontak</a></li>
+                <li><a href="/admin" class="nav-link admin-link">Staff Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="contact-main">
+        <div class="container">
+            <section class="contact-hero">
+                <h1>Kontak Kami</h1>
+                <p class="hero-subtitle">Kami siap membantu dengan pertanyaan atau bantuan yang Anda butuhkan</p>
+            </section>
+
+            <section class="contact-content">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Hubungi Kami</h2>
+                        
+                        <div class="contact-item">
+                            <h3>Alamat</h3>
+                            <p>Hotel Grand Vista<br>
+                            Jl. Hotel No. 123<br>
+                            Jakarta Pusat, DKI Jakarta 12345</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Telepon</h3>
+                            <p><strong>Resepsionis Utama:</strong> (021) 123-4567</p>
+                            <p><strong>Reservasi:</strong> (021) 123-4568</p>
+                            <p><strong>Room Service:</strong> (021) 123-4569</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Email</h3>
+                            <p><strong>Pertanyaan Umum:</strong> info@hotelgrandvista.co.id</p>
+                            <p><strong>Reservasi:</strong> reservasi@hotelgrandvista.co.id</p>
+                            <p><strong>Event:</strong> event@hotelgrandvista.co.id</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <h3>Jam Operasional</h3>
+                            <p><strong>Front Desk:</strong> 24/7</p>
+                            <p><strong>Restoran:</strong> 06:00 - 23:00</p>
+                            <p><strong>Bar:</strong> 17:00 - 01:00</p>
+                            <p><strong>Kolam Renang:</strong> 06:00 - 22:00</p>
+                            <p><strong>Pusat Fitness:</strong> 24/7</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-section">
+                        <h2>Kirim Pesan kepada Kami</h2>
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Nama Lengkap:</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Alamat Email:</label>
+                                <input type="email" id="email" required>
+                            </div>                            
+                            <div class="form-group">
+                                <label for="phone">Nomor Telepon:</label>
+                                <input type="tel" id="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">Subjek:</label>
+                                <select id="subject" required>
+                                    <option value="">Silakan pilih...</option>
+                                    <option value="general">Pertanyaan Umum</option>
+                                    <option value="reservation">Pertanyaan Reservasi</option>
+                                    <option value="complaint">Keluhan</option>
+                                    <option value="compliment">Pujian</option>
+                                    <option value="event">Perencanaan Event</option>
+                                    <option value="other">Lainnya</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Pesan:</label>
+                                <textarea id="message" rows="6" required placeholder="Silakan deskripsikan pertanyaan atau pesan Anda..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hotel Grand Vista</h3>
+                    <p>Kenyamanan Anda adalah prioritas kami</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Link Cepat</h4>
+                    <ul>
+                        <li><a href="/booking">Pesan Kamar</a></li>
+                        <li><a href="/contact">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Info Kontak</h4>
+                    <p>Jl. Hotel No. 123, Pusat Kota</p>
+                    <p>Telepon: (021) 123-4567</p>
+                    <p>Email: info@hotelgrandvista.co.id</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hotel Grand Vista. Hak cipta dilindungi undang-undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/contact.js"></script>
+</body>
+</html>
