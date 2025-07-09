@@ -26,5 +26,19 @@
     "guestPhone": "555-987-6543",
     "bookingDate": "2025-06-06T00:29:15.791Z",
     "status": "confirmed"
+  },
+  {
+    "id": "72d249f0-2714-4c10-9c9f-5447717b8336",
+    "roomId": 4,
+    "roomType": "Deluxe",
+    "checkIn": "2025-06-27",
+    "checkOut": "2025-07-03",
+    "nights": 6,
+    "totalCost": 1200,
+    "guestName": "123",
+    "guestEmail": "123@123",
+    "guestPhone": "123",
+    "bookingDate": "2025-06-27T12:32:11.985Z",
+    "status": "confirmed"
   }
 ]

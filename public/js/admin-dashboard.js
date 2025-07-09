@@ -6,14 +6,56 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let rooms = [];
     let bookings = [];
+    let connectionTimeout = null;
     
+    // Show loading/connection status
+    function showStatus(message, type = 'info') {
+        // Create status element if it doesn't exist
+        let statusElement = document.getElementById('statusMessage');
+        if (!statusElement) {
+            statusElement = document.createElement('div');
+            statusElement.id = 'statusMessage';
+            statusElement.style.cssText = `
+                position: fixed; top: 70px; right: 20px; 
+                padding: 10px 15px; border-radius: 5px; 
+                font-weight: bold; z-index: 1000; 
+                max-width: 300px; word-wrap: break-word;
+            `;
+            document.body.appendChild(statusElement);
+        }
+        
+        // Set style based on type
+        const styles = {
+            info: 'background: #007bff; color: white;',
+            success: 'background: #28a745; color: white;',
+            warning: 'background: #ffc107; color: black;',
+            error: 'background: #dc3545; color: white;'
+        };
+        
+        statusElement.style.cssText += styles[type] || styles.info;
+        statusElement.textContent = message;
+        statusElement.style.display = 'block';
+        
+        // Auto hide after 3 seconds for success/info messages
+        if (type === 'success' || type === 'info') {
+            setTimeout(() => {
+                if (statusElement) statusElement.style.display = 'none';
+            }, 3000);
+        }
+    }
+
     // Logout functionality
     logoutBtn.addEventListener('click', async function() {
         try {
-            await fetch('/api/admin/logout', { method: 'POST' });
+            await fetch('/api/admin/logout', { 
+                method: 'POST',
+                credentials: 'same-origin'
+            });
             window.location.href = '/admin';
         } catch (error) {
             console.error('Logout error:', error);
+            // Even if logout fails, redirect to login
+            window.location.href = '/admin';
         }
     });
     
@@ -22,28 +64,71 @@ document.addEventListener('DOMContentLoaded', function() {
         loadDashboardData();
     });
     
+    // Check session status before making requests
+    async function checkSession() {
+        try {
+            const response = await fetch('/api/admin/check-session', {
+                credentials: 'same-origin'
+            });
+            const result = await response.json();
+            if (!result.isLoggedIn) {
+                window.location.href = '/admin';
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.error('Error checking session:', error);
+            window.location.href = '/admin';
+            return false;
+        }
+    }
+
     // Load dashboard data
     async function loadDashboardData() {
+        showStatus('Loading dashboard data...', 'info');
+        
+        // Check session first
+        const sessionValid = await checkSession();
+        if (!sessionValid) return;
+
         try {
             // Load rooms
-            const roomsResponse = await fetch('/api/admin/rooms');
+            const roomsResponse = await fetch('/api/admin/rooms', {
+                credentials: 'same-origin'
+            });
+            if (roomsResponse.status === 401) {
+                showStatus('Session expired. Redirecting to login...', 'error');
+                setTimeout(() => window.location.href = '/admin', 2000);
+                return;
+            }
             if (roomsResponse.ok) {
                 rooms = await roomsResponse.json();
                 displayRooms();
                 updateStats();
             } else {
-                window.location.href = '/admin';
+                showStatus('Failed to load rooms data', 'error');
+                console.error('Failed to load rooms');
             }
             
             // Load bookings
-            const bookingsResponse = await fetch('/api/bookings');
+            const bookingsResponse = await fetch('/api/bookings', {
+                credentials: 'same-origin'
+            });
+            if (bookingsResponse.status === 401) {
+                showStatus('Session expired. Redirecting to login...', 'error');
+                setTimeout(() => window.location.href = '/admin', 2000);
+                return;
+            }
             if (bookingsResponse.ok) {
                 bookings = await bookingsResponse.json();
                 displayBookings();
+                showStatus('Dashboard loaded successfully', 'success');
+            } else {
+                showStatus('Failed to load bookings data', 'warning');
             }
         } catch (error) {
             console.error('Error loading dashboard data:', error);
-            window.location.href = '/admin';
+            showStatus('Network error. Please check your connection.', 'error');
         }
     }
     
@@ -180,6 +265,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // Update room status
     window.updateRoomStatus = async function(roomId, statusType, value) {
         try {
+            showStatus('Updating room status...', 'info');
+            
+            // Check session before making update
+            const sessionValid = await checkSession();
+            if (!sessionValid) return;
+
             const room = rooms.find(r => r.id === roomId);
             const updatedRoom = { ...room };
             updatedRoom[statusType] = value;
@@ -189,8 +280,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updatedRoom)
+                body: JSON.stringify(updatedRoom),
+                credentials: 'same-origin' // Include session cookies
             });
+            
+            if (response.status === 401) {
+                showStatus('Session expired. Redirecting to login...', 'error');
+                setTimeout(() => window.location.href = '/admin', 2000);
+                return;
+            }
             
             if (response.ok) {
                 // Update local data
@@ -203,12 +301,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (statusType === 'checkedOut') {
                     updateCheckoutStatusInTable(roomId, value);
                 }
+                
+                showStatus('Room status updated successfully', 'success');
             } else {
-                alert('Failed to update room status');
+                const errorData = await response.json();
+                showStatus(`Failed to update: ${errorData.error || 'Unknown error'}`, 'error');
             }
         } catch (error) {
             console.error('Error updating room status:', error);
-            alert('Failed to update room status');
+            showStatus('Network error. Please check your connection.', 'error');
         }
     };
     
@@ -227,6 +328,10 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resetRoom = async function(roomId) {
         if (confirm('Are you sure you want to reset this room to available state?')) {
             try {
+                // Check session before making update
+                const sessionValid = await checkSession();
+                if (!sessionValid) return;
+
                 const room = rooms.find(r => r.id === roomId);
                 const updatedRoom = {
                     ...room,
@@ -240,8 +345,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(updatedRoom)
+                    body: JSON.stringify(updatedRoom),
+                    credentials: 'same-origin' // Include session cookies
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = '/admin';
+                    return;
+                }
                 
                 if (response.ok) {
                     // Update local data
@@ -249,16 +361,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     rooms[roomIndex] = updatedRoom;
                     displayRooms();
                     updateStats();
+                    
+                    // Update checkout status in bookings table
+                    updateCheckoutStatusInTable(roomId, false);
                 } else {
-                    alert('Failed to reset room');
+                    const errorData = await response.json();
+                    alert(`Failed to reset room: ${errorData.error || 'Unknown error'}`);
                 }
             } catch (error) {
                 console.error('Error resetting room:', error);
-                alert('Failed to reset room');
+                alert('Network error. Please check your connection and try again.');
             }
         }
     };
     
     // Load initial data
     loadDashboardData();
+    
+    // Periodic session check (every 5 minutes)
+    setInterval(async () => {
+        const sessionValid = await checkSession();
+        if (!sessionValid) {
+            alert('Session expired. You will be redirected to login.');
+        }
+    }, 5 * 60 * 1000); // 5 minutes
 });

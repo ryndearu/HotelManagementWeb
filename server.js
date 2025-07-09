@@ -15,8 +15,13 @@ app.use(express.static('public'));
 app.use(session({
   secret: 'hotel-booking-secret',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }
+  saveUninitialized: false,
+  cookie: { 
+    secure: false,
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  },
+  name: 'sessionId'
 }));
 
 // Data files
@@ -127,6 +132,10 @@ app.get('/admin/dashboard', (req, res) => {
 });
 
 // API Routes
+app.get('/api/admin/check-session', (req, res) => {
+  res.json({ isLoggedIn: !!req.session.isAdmin });
+});
+
 app.get('/api/rooms', (req, res) => {
   const rooms = readJSON(ROOMS_FILE);
   res.json(rooms);
@@ -134,18 +143,29 @@ app.get('/api/rooms', (req, res) => {
 
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
+  console.log('Login attempt for user:', username);
   
   if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
     req.session.isAdmin = true;
+    console.log('Login successful, session created');
     res.json({ success: true });
   } else {
+    console.log('Login failed - invalid credentials');
     res.json({ success: false, message: 'Kredensial tidak valid' });
   }
 });
 
 app.post('/api/admin/logout', (req, res) => {
+  console.log('Logout request received');
   req.session.isAdmin = false;
-  res.json({ success: true });
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+    } else {
+      console.log('Session destroyed successfully');
+    }
+    res.json({ success: true });
+  });
 });
 
 app.get('/api/admin/rooms', (req, res) => {
@@ -158,12 +178,18 @@ app.get('/api/admin/rooms', (req, res) => {
 });
 
 app.put('/api/admin/rooms/:id', (req, res) => {
+  console.log('PUT request to update room:', req.params.id);
+  console.log('Session check:', req.session.isAdmin);
+  
   if (!req.session.isAdmin) {
+    console.log('Unauthorized access attempt');
     return res.status(401).json({ error: 'Tidak diizinkan' });
   }
   
   const roomId = parseInt(req.params.id);
   const { occupied, needsCleaning, checkedOut } = req.body;
+  
+  console.log('Updating room with data:', { occupied, needsCleaning, checkedOut });
   
   const rooms = readJSON(ROOMS_FILE);
   const roomIndex = rooms.findIndex(room => room.id === roomId);
@@ -171,8 +197,10 @@ app.put('/api/admin/rooms/:id', (req, res) => {
   if (roomIndex !== -1) {
     rooms[roomIndex] = { ...rooms[roomIndex], occupied, needsCleaning, checkedOut };
     writeJSON(ROOMS_FILE, rooms);
-    res.json({ success: true });
+    console.log('Room updated successfully');
+    res.json({ success: true, room: rooms[roomIndex] });
   } else {
+    console.log('Room not found:', roomId);
     res.status(404).json({ error: 'Kamar tidak ditemukan' });
   }
 });

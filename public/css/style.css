@@ -1035,6 +1035,75 @@ body {
     font-weight: 500;
 }
 
+/* Status Message Styles */
+#statusMessage {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    z-index: 1000;
+    max-width: 350px;
+    word-wrap: break-word;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    display: none;
+}
+
+#statusMessage.info {
+    background: #007bff;
+    color: white;
+    border-left: 4px solid #0056b3;
+}
+
+#statusMessage.success {
+    background: #28a745;
+    color: white;
+    border-left: 4px solid #1e7e34;
+}
+
+#statusMessage.warning {
+    background: #ffc107;
+    color: #212529;
+    border-left: 4px solid #e0a800;
+}
+
+#statusMessage.error {
+    background: #dc3545;
+    color: white;
+    border-left: 4px solid #bd2130;
+}
+
+/* Loading spinner for buttons */
+.loading::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    margin: 0 5px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Improved button states */
+.control-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.control-btn.loading {
+    pointer-events: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-container {
